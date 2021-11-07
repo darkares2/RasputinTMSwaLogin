@@ -42,7 +42,7 @@ class LoginForm extends React.Component {
                 if (text !== null) {
                     current.setState({ error: ''});
                     console.log(text);
-                    if (text.password !== password)
+                    if (text.Password !== password)
                         current.setState({ error: 'Invalid credentials'});
                 }
         })();
