@@ -1,8 +1,11 @@
 import React from 'react';
+import { LoginForm } from './login';
 
 function App() {
-  const value = 'World';
-  return <div>Hello {value}</div>;
+  return <div>
+          <div>Welcome to RasputinTM</div>
+          <LoginForm />
+        </div>;
 }
 
 export default App;
