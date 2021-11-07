@@ -5,7 +5,7 @@ class LoginForm extends React.Component {
 
     constructor(props) {
       super(props);
-      this.state = {userID: '', password: '', error: ''};
+      this.state = {userID: '', password: '', error: '', loggedIn: false};
   
       this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -21,7 +21,7 @@ class LoginForm extends React.Component {
     handleSubmit = event => {
       var userID = this.state.userID;
       var password = this.state.password;
-      password = sha256(password);
+      password = sha256(password).toString();
       event.preventDefault();
       const current = this;
 
@@ -42,25 +42,67 @@ class LoginForm extends React.Component {
                 if (text !== null) {
                     current.setState({ error: ''});
                     console.log(text);
+                    console.log(password);
                     if (text.Password !== password)
                         current.setState({ error: 'Invalid credentials'});
+                    else {
+                        current.setState({loggedIn: true});
+                    }
                 }
         })();
     }
   
     render() {
+        if (this.state.loggedIn) {
+            window.location.href = 'https://www.google.dk'; 
+            return <div />;
+        }
+
+        const formStyle = {
+            margin: 'auto',
+            padding: '10px',
+            border: '1px solid #c9c9c9',
+            borderRadius: '5px',
+            background: '#f5f5f5',
+            width: '220px',
+              display: 'block'
+        };
+        const labelStyle = {
+            margin: '10px 0 5px 0',
+            fontFamily: 'Arial, Helvetica, sans-serif',
+            fontSize: '15px',
+        };
+        const inputStyle = {
+            margin: '5px 0 10px 0',
+            padding: '5px', 
+            border: '1px solid #bfbfbf',
+            borderRadius: '3px',
+            boxSizing: 'border-box',
+            width: '100%'
+        };
+        const submitStyle = {
+            margin: '10px 0 0 0',
+            padding: '7px 10px',
+            border: '1px solid #efffff',
+            borderRadius: '3px',
+            background: '#3085d6',
+            width: '100%', 
+            fontSize: '15px',
+            color: 'white',
+            display: 'block'
+        };
       return (
-        <form onSubmit={this.handleSubmit}>
-          <label>
+        <form style={formStyle} onSubmit={this.handleSubmit}>
+          <label style={labelStyle}>
             UserID:
-            <input type="text" name="userID" value={this.state.userID} onChange={this.handleChangeUserID} />
+            <input style={inputStyle} type="text" name="userID" value={this.state.userID} onChange={this.handleChangeUserID} />
           </label>
-          <label>
+          <label style={labelStyle}>
             Password:
-            <input type="password" name="password" value={this.state.password} onChange={this.handleChangePassword} />
+            <input style={inputStyle} type="password" name="password" value={this.state.password} onChange={this.handleChangePassword} />
           </label>
           <span>{this.state.error}</span>
-          <input type="submit" value="Submit" />
+          <input type="submit" value="Submit" style={submitStyle} />
         </form>
       );
     }

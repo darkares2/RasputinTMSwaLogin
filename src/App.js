@@ -2,9 +2,13 @@ import React from 'react';
 import { LoginForm } from './login';
 
 function App() {
-  return <div>
-          <div>Welcome to RasputinTM</div>
-          <LoginForm />
+  const appStyle = {
+    height: '250px',
+      display: 'flex'
+  };
+
+  return <div style={appStyle}>
+            <LoginForm />
         </div>;
 }
 
